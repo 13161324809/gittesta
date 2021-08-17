@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wash.car.mapper.OrderCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wash.car.entity.OrderComment">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="car_washer" property="carWasher" />
+        <result column="parking_lot_id" property="parkingLotId" />
+        <result column="satisfaction" property="satisfaction" />
+        <result column="punctuality" property="punctuality" />
+        <result column="cleanliness" property="cleanliness" />
+        <result column="politeness" property="politeness" />
+        <result column="comprehensive_evaluation" property="comprehensiveEvaluation" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+    </resultMap>
+
+</mapper>

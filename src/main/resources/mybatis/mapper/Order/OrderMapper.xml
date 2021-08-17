@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wash.car.mapper.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wash.car.entity.Order">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="status" property="status" />
+        <result column="parking_space_number" property="parkingSpaceNumber" />
+        <result column="parking_lot_id" property="parkingLotId" />
+        <result column="car_washing_time" property="carWashingTime" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="license_plate_number" property="licensePlateNumber" />
+        <result column="model" property="model" />
+        <result column="color" property="color" />
+        <result column="is_currency" property="isCurrency" />
+        <result column="is_coupons" property="isCoupons" />
+        <result column="currency" property="currency" />
+        <result column="price" property="price" />
+        <result column="is_delete" property="isDelete" />
+        <result column="pay_time" property="payTime" />
+        <result column="completion_time" property="completionTime" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+    </resultMap>
+
+</mapper>

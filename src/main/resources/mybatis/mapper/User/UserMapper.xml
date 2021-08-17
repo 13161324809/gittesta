@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wash.car.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wash.car.entity.User">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="wx_open_id" property="wxOpenId" />
+        <result column="wx_union_id" property="wxUnionId" />
+        <result column="phone" property="phone" />
+        <result column="id_card" property="idCard" />
+        <result column="id_card_positive" property="idCardPositive" />
+        <result column="id_card_back" property="idCardBack" />
+        <result column="account" property="account" />
+        <result column="password" property="password" />
+        <result column="status" property="status" />
+        <result column="coupons" property="coupons" />
+        <result column="balance" property="balance" />
+        <result column="parking_lot_id" property="parkingLotId" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="last_ip" property="lastIp" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="currency" property="currency" />
+    </resultMap>
+
+</mapper>

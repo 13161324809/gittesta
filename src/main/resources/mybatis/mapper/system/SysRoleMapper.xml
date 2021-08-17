@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wash.car.mapper.system.SysRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.wash.car.entity.system.SysRole">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+        <result column="role_description" jdbcType="VARCHAR" property="roleDescription" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapDTO" type="com.wash.car.DTO.system.SysRoleDTO" extends="BaseResultMap">
+        <collection property="menuList" javaType="java.util.ArrayList" ofType="com.wash.car.DTO.system.SysMenuDTO" select="com.wash.car.mapper.system.SysMenuMapper.findListByRoleId" column="{id=id}"></collection>
+    </resultMap>
+
+    <select id="findListByUserId" resultMap="BaseResultMapDTO">
+        SELECT r.id,r.role_name,r.role_code,r.role_description
+        FROM sys_user u
+        LEFT JOIN sys_user_role ur ON u.id = ur.user_id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+        WHERE u.id = #{id} and r.is_delete = 0
+    </select>
+
+</mapper>
