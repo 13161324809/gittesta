@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,7 +43,7 @@ public class SysRoleController {
     ISysRoleService iSysRoleService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
     @ApiOperation(value="权限列表")
     public ResultUtils list(SysRole sysRole, Page page) {
@@ -61,7 +62,7 @@ public class SysRoleController {
     }
 
     @RequestMapping(value="/query",method = RequestMethod.GET)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils query(String id) {
         ResultUtils resultUtils = ResultUtils.ok();
@@ -79,9 +80,9 @@ public class SysRoleController {
     }
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
-    public ResultUtils update(SysRole sysRole, HttpServletRequest request) {
+    public ResultUtils update(@RequestBody SysRole sysRole, HttpServletRequest request) {
         try{
             HttpSession session = request.getSession();
             sysRole.setUpdateBy(session.getAttribute(Constant.SESSION_USER_ID)+"");
@@ -95,7 +96,7 @@ public class SysRoleController {
     }
 
     @RequestMapping(value="/insert",method = RequestMethod.POST)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils insert(SysRole sysRole, HttpServletRequest request) {
         try{
@@ -111,7 +112,7 @@ public class SysRoleController {
     }
 
     @RequestMapping(value="/delete",method = RequestMethod.POST)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils delete(SysRole sysRole, HttpServletRequest request) {
         try{

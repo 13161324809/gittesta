@@ -18,6 +18,8 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,19 +51,17 @@ public class LoginController{
     @Autowired
     JwtUtils jwtUtils;
 
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     @AuthPassport(token = false)
-    @ResponseBody
     @ApiOperation(value="登录")
-    public ResultUtils login(@RequestParam(value="username") String username, @RequestParam(value="password") String password, HttpServletRequest request) {
+    public ResultUtils login(@RequestBody SysUser user, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
         ResultUtils resultUtils = new ResultUtils();
 
         //多类型账号登陆
         QueryWrapper<SysUser> q = new QueryWrapper<SysUser>();
-        q.eq("user_name", username);
+        q.eq("user_name", user.getUserName());
         q.eq("is_delete",Constant.IS_DELETE_0);
 
         SysUser sysUser = iSysUserService.getOne(q);
@@ -71,7 +72,7 @@ public class LoginController{
 
         String encryptedPassword = PasswordUtil.encrypt(sysUser.getPassword());
         System.out.println(encryptedPassword);
-        boolean bool = PasswordUtil.valid(password,sysUser.getPassword());
+        boolean bool = PasswordUtil.valid(user.getPassword(),sysUser.getPassword());
 
         if(bool){
             resultUtils = ResultUtils.ok("登录成功");
@@ -102,9 +103,11 @@ public class LoginController{
 
             Map<String,Object> menuMap = new HashMap<String,Object>();
 
+            List<String> menuList = new ArrayList<String>();
             for(SysRoleDTO role : rolelist){
                 for(SysMenuDTO menu : role.getMenuList()){
                     menuMap.put(menu.getMenuCode(),menu.getMenuName());
+                    menuList.add(menu.getMenuCode());
                     for(SysMenuDTO childMenu : menu.getChildMenu()){
                         menuMap.put(childMenu.getMenuCode(),childMenu.getMenuName());
                     }
@@ -118,6 +121,7 @@ public class LoginController{
             session.setAttribute(Constant.SESSION_TOKEN,token);
 
             resultUtils.put("userName",sysUser.getChineseName()!=null?sysUser.getChineseName():sysUser.getEnglishName());
+            resultUtils.put("menu",menuList);
         } catch(Exception e){
             logger.info("获取登录信息失败",e);
             return ResultUtils.error(999999,"系统异常，登录失败");

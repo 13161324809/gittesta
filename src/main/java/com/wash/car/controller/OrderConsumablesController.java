@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -81,7 +82,7 @@ public class OrderConsumablesController {
     @RequestMapping(value="/update",method = RequestMethod.POST)
     @AuthPassport(menu = "orderConsumables")
     @ResponseBody
-    public ResultUtils update(OrderConsumables OrderConsumables, HttpServletRequest request) {
+    public ResultUtils update(@RequestBody OrderConsumables OrderConsumables, HttpServletRequest request) {
         try{
             HttpSession session = request.getSession();
             OrderConsumables.setUpdateBy(Integer.valueOf(session.getAttribute(Constant.SESSION_USER_ID)+""));

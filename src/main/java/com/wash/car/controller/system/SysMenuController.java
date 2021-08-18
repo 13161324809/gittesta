@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,7 +43,7 @@ public class SysMenuController {
     ISysMenuService iSysMenuService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @AuthPassport(menu = "menu")
+    @AuthPassport(menu = "system")
     @ResponseBody
     @ApiOperation(value="菜单列表")
     public ResultUtils list(SysMenu sysMenu, Page page) {
@@ -58,7 +59,7 @@ public class SysMenuController {
     }
 
     @RequestMapping(value="/query",method = RequestMethod.GET)
-    @AuthPassport(menu = "menu")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils query(String id) {
         ResultUtils resultUtils = ResultUtils.ok();
@@ -76,9 +77,9 @@ public class SysMenuController {
     }
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
-    @AuthPassport(menu = "menu")
+    @AuthPassport(menu = "system")
     @ResponseBody
-    public ResultUtils update(SysMenu sysMenu, HttpServletRequest request) {
+    public ResultUtils update(@RequestBody SysMenu sysMenu, HttpServletRequest request) {
         try{
             HttpSession session = request.getSession();
             sysMenu.setUpdateBy(session.getAttribute(Constant.SESSION_USER_ID)+"");
@@ -92,7 +93,7 @@ public class SysMenuController {
     }
 
     @RequestMapping(value="/insert",method = RequestMethod.POST)
-    @AuthPassport(menu = "menu")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils insert(SysMenu sysMenu, HttpServletRequest request) {
         try{
@@ -109,7 +110,7 @@ public class SysMenuController {
     }
 
     @RequestMapping(value="/delete",method = RequestMethod.POST)
-    @AuthPassport(menu = "menu")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils delete(SysMenu sysMenu, HttpServletRequest request) {
         try{

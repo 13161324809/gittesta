@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -41,7 +43,7 @@ public class SysRoleMenuController {
     ISysRoleMenuService iSysRoleMenuService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
     @ApiOperation(value="权限菜单列表")
     public ResultUtils list(SysRoleMenu SysRoleMenu, Page page) {
@@ -60,9 +62,11 @@ public class SysRoleMenuController {
     }
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
-    @AuthPassport(menu = "role")
+    @AuthPassport(menu = "system")
     @ResponseBody
-    public ResultUtils update(String menuId, String roleId) {
+    public ResultUtils update(@RequestBody Map<String,String> map) {
+        String menuId = map.get("menuId");
+        String roleId = map.get("roleId");
         try{
             if(StringUtils.isNotBlank(menuId) && StringUtils.isNotBlank(roleId)){
                 QueryWrapper<SysRoleMenu> q = new QueryWrapper<SysRoleMenu>();

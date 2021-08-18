@@ -14,10 +14,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -38,7 +41,7 @@ public class SysUserRoleController {
     ISysUserRoleService iSysUserRoleService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
     @ApiOperation(value="用户权限列表")
     public ResultUtils list(SysUserRole SysUserRole, Page page) {
@@ -57,18 +60,18 @@ public class SysUserRoleController {
     }
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
-    public ResultUtils update(String userId,String roleId) {
+    public ResultUtils update(@RequestBody Map<String,String> map) {
         try{
-            if(StringUtils.isNotBlank(roleId)){
+            if(StringUtils.isNotBlank(map.get("roleId"))){
                 QueryWrapper<SysUserRole> q = new QueryWrapper<SysUserRole>();
-                q.eq("user_id", userId);
+                q.eq("user_id", map.get("userId"));
                 iSysUserRoleService.remove(q);
 
                 SysUserRole sysUserRole = new SysUserRole();
-                sysUserRole.setRoleId(roleId);
-                sysUserRole.setUserId(userId);
+                sysUserRole.setRoleId(map.get("roleId"));
+                sysUserRole.setUserId(map.get("userId"));
                 iSysUserRoleService.save(sysUserRole);
             }else{
                 return ResultUtils.error(999999,"请选择关联角色！");

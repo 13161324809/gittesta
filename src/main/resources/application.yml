@@ -24,15 +24,10 @@ spring:
     format:
       dateTime: yyyy-MM-dd HH:mm:ss
 
-# Mybatis配置
-mybatis:
-  #搜索指定包别名
-  type-aliases-package: com.wash.car
-  #加载全局的配置文件
-  config-location: classpath:mybatis/mybatis-config.xml
-  #配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapper-locations: classpath*:mybatis/mapper/*/*.xml
-  check-config-location: true
+mybatis-plus:
+  mapper-locations: classpath*:/mybatis/mapper/**/**Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # 日志配置
 logging:

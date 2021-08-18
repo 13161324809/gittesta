@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,7 +44,7 @@ public class SysUserController {
     ISysUserService iSysUserService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
     @ApiOperation(value="用户列表")
     public ResultUtils list(SysUser sysUser, Page page) {
@@ -62,7 +63,7 @@ public class SysUserController {
     }
 
     @RequestMapping(value="/query",method = RequestMethod.GET)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils query(String id) {
         ResultUtils resultUtils = ResultUtils.ok();
@@ -80,9 +81,9 @@ public class SysUserController {
     }
 
     @RequestMapping(value="/update",method = RequestMethod.POST)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
-    public ResultUtils update(SysUser sysUser, HttpServletRequest request) {
+    public ResultUtils update(@RequestBody SysUser sysUser, HttpServletRequest request) {
         try{
             HttpSession session = request.getSession();
             sysUser.setUpdateBy(session.getAttribute(Constant.SESSION_USER_ID)+"");
@@ -102,7 +103,7 @@ public class SysUserController {
     }
 
     @RequestMapping(value="/insert",method = RequestMethod.POST)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils insert(SysUser sysUser, HttpServletRequest request) {
         try{
@@ -133,7 +134,7 @@ public class SysUserController {
     }
 
     @RequestMapping(value="/delete",method = RequestMethod.POST)
-    @AuthPassport(menu = "sysUser")
+    @AuthPassport(menu = "system")
     @ResponseBody
     public ResultUtils delete(SysUser sysUser, HttpServletRequest request) {
         try{
